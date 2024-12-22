@@ -1,29 +1,25 @@
-#ifndef FILM_H_INCLUDED
-#define FILM_H_INCLUDED
+#ifndef FILMLINKEDLIST_H_INCLUDED
+#define FILMLINKEDLIST_H_INCLUDED
 #include <iostream>
+#include <string>
 using namespace std;
 
-typedef int infotype;
-typedef struct elmlist *address;
-
-struct elmlist {
-    infotype info;
-    address next;
+struct Film {
+    string title;
+    string genre;
+    double rating;
+    Film* next;
 };
 
-struct List {
-    address first;
+struct FilmList {
+    Film* first;
 };
 
-void inputAngka(int &NUM, int x);
-void tambah(int &NUM, int x);
-void printHasil(int NUM);
-int selectionMenu();
-void createList(List &L);
-address createNew(infotype x);
-void insertLast(List &L, address p);
-void show(List L);
-address findMin(List L);
-void insertMiddle(List &L, int value);
+void createList(FilmList &L);
+Film* createFilm(string title, string genre, double rating);
+void insertLast(FilmList &L, Film* p);
+void showFilms(FilmList L);
+Film* findBestFilm(FilmList L);
+void insertSorted(FilmList &L, Film* p);
 
-#endif // FILM_H_INCLUDED
+#endif // FILMLINKEDLIST_H_INCLUDED
