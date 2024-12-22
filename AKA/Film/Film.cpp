@@ -1,97 +1,61 @@
-#include "Film.h"
+// Main.cpp
+#include "FilmLinkedList.h"
+#include <iostream>
+using namespace std;
 
+int main() {
+    FilmList L;
+    createList(L);
 
-void inputAngka_103012300497(int &NUM, int x){
-    NUM = 0;
-}
+    int menuChoice;
+    string title, genre;
+    double rating;
 
-void tambah_103012300497(int &NUM, int x){
-    NUM = NUM + 1;
-}
+    do {
+        cout << "\n===== MENU =====\n";
+        cout << "1. Tambah Film\n";
+        cout << "2. Tampilkan Semua Film\n";
+        cout << "3. Tampilkan Film Terbaik\n";
+        cout << "4. Tambah Film Secara Terurut\n";
+        cout << "0. Keluar\n";
+        cout << "Pilih menu: ";
+        cin >> menuChoice;
 
-void printHasil_103012300497(int NUM){
-    cout << "Nilai saat ini: " << NUM << endl;
-}
-
-int selectionMenu_103012300497(){
-    cout << "===== MENU ======" << endl;
-    cout << "1. Menambah N data baru" << endl;
-    cout << "2. Menampilkan semua data" << endl;
-    cout << "3. Nilai terkecil" << endl;
-    cout << "4. Insert middle " << endl;
-    cout << "0. Exit" << endl;
-    cout << "Pilihan menu" << endl;
-
-    int input = 0;
-    cin >> input;
-
-    return input;
-}
-
-void createList_103012300497(List &L){
-    first(L) = nil;
-}
-
-
-address createNew_103012300497(infotype x){
-
-    address p = new elmlist;
-    info(p) = x;
-    next(p) = nil;
-
-    return p;
-}
-
-
-void insertLast_103012300497(List &L, address p){
-    if (first(L) == nil){
-        first(L) = p;
-    } else{
-        address q = first(L);
-        while (next(q) != nil) {
-            q = next(q);
+        if (menuChoice == 1) {
+            cout << "Masukkan Judul: ";
+            cin.ignore();
+            getline(cin, title);
+            cout << "Masukkan Genre: ";
+            getline(cin, genre);
+            cout << "Masukkan Rating: ";
+            cin >> rating;
+            insertLast(L, createFilm(title, genre, rating));
+        } else if (menuChoice == 2) {
+            cout << "Daftar Film:\n";
+            showFilms(L);
+        } else if (menuChoice == 3) {
+            Film* bestFilm = findBestFilm(L);
+            if (bestFilm != nullptr) {
+                cout << "Film Terbaik:\n";
+                cout << "Title: " << bestFilm->title << ", Genre: " << bestFilm->genre << ", Rating: " << bestFilm->rating << endl;
+            } else {
+                cout << "Tidak ada film dalam daftar." << endl;
+            }
+        } else if (menuChoice == 4) {
+            cout << "Masukkan Judul: ";
+            cin.ignore();
+            getline(cin, title);
+            cout << "Masukkan Genre: ";
+            getline(cin, genre);
+            cout << "Masukkan Rating: ";
+            cin >> rating;
+            insertSorted(L, createFilm(title, genre, rating));
+        } else if (menuChoice == 0) {
+            cout << "Keluar dari program." << endl;
+        } else {
+            cout << "Pilihan tidak valid." << endl;
         }
-        next(q) = p;
-    }
-}
+    } while (menuChoice != 0);
 
-address findMin_103012300497(List L){
-    if (first(L) == nil) return nil;
-    address minNode = first(L);
-    address current = next(first(L));
-
-    while (current != nil) {
-        if (info(current) < info(minNode)) {
-            minNode = current;
-        }
-        current = next(current);
-    }
-    return minNode;
-};
-
-void insertMiddle_103012300497(List &L, int value){
-    address p = createNew_103012300497(value);
-    if (first(L) == nil) {
-        first(L) = p;
-    } else if (info(first(L)) >= value) {
-        next(p) = first(L);
-        first(L) = p;
-    } else {
-        address q = first(L);
-        while (next(q) != nil && info(next(q)) < value) {
-            q = next(q);
-        }
-
-        next(p) = next(q);
-        next(q) = p;
-    }
-}
-
-void show_103012300497(List L){
-    address p = first(L);
-    while (p != nil) {
-        cout << info(p) << ", ";
-        p = next(p);
-    }
-    cout << endl;
+    return 0;
 }
