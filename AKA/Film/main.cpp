@@ -1,66 +1,59 @@
 #include <iostream>
-
 using namespace std;
 
-int main()
-{
-        List L;
-    createList_103012300497(L);
+int main() {
+    FilmList L;
+    createList(L);
 
     int menuChoice;
-    char repeatMenu;
-    int dataCount;
-    infotype x;
+    string title, genre;
+    double rating;
 
     do {
-        menuChoice = selectionMenu_103012300497();
-        switch(menuChoice) {
-            case 1:
-                cout << "Jumlah data yang akan ditambahkan: ";
-                cin >> dataCount;
-                for (int i = 0; i < dataCount; i++) {
-                    cout << "Masukkan data baru: ";
-                    cin >> x;
-                    address p = createNew_103012300497(x);
-                    insertLast_103012300497(L, p);
-                }
-                break;
+        cout << "\n===== MENU =====\n";
+        cout << "1. Tambah Film\n";
+        cout << "2. Tampilkan Semua Film\n";
+        cout << "3. Tampilkan Film Terbaik\n";
+        cout << "4. Tambah Film Secara Terurut\n";
+        cout << "0. Keluar\n";
+        cout << "Pilih menu: ";
+        cin >> menuChoice;
 
-            case 2:
-                cout << "Data dalam list: ";
-                show_103012300497(L);
-                break;
-
-            case 3:
-                {
-                    address minNode = findMin_103012300497(L);
-                    if (minNode != nil) {
-                        cout << "Nilai terkecil: " << info(minNode) << endl;
-                    } else {
-                        cout << "List kosong." << endl;
-                    }
-                }
-                break;
-
-            case 4:
-                cout << "Masukkan nilai untuk di-insert di tengah: ";
-                cin >> x;
-                insertMiddle_103012300497(L, x);
-                break;
-
-            case 0:
-                cout << "ANDA TELAH KELUAR DARI PROGRAM" << endl;
-                return 0;
-
-            default:
-                cout << "Pilihan tidak valid." << endl;
+        if (menuChoice == 1) {
+            cout << "Masukkan Judul: ";
+            cin.ignore();
+            getline(cin, title);
+            cout << "Masukkan Genre: ";
+            getline(cin, genre);
+            cout << "Masukkan Rating: ";
+            cin >> rating;
+            insertLast(L, createFilm(title, genre, rating));
+        } else if (menuChoice == 2) {
+            cout << "Daftar Film:\n";
+            showFilms(L);
+        } else if (menuChoice == 3) {
+            Film* bestFilm = findBestFilm(L);
+            if (bestFilm != nullptr) {
+                cout << "Film Terbaik:\n";
+                cout << "Title: " << bestFilm->title << ", Genre: " << bestFilm->genre << ", Rating: " << bestFilm->rating << endl;
+            } else {
+                cout << "Tidak ada film dalam daftar." << endl;
+            }
+        } else if (menuChoice == 4) {
+            cout << "Masukkan Judul: ";
+            cin.ignore();
+            getline(cin, title);
+            cout << "Masukkan Genre: ";
+            getline(cin, genre);
+            cout << "Masukkan Rating: ";
+            cin >> rating;
+            insertSorted(L, createFilm(title, genre, rating));
+        } else if (menuChoice == 0) {
+            cout << "Keluar dari program." << endl;
+        } else {
+            cout << "Pilihan tidak valid." << endl;
         }
-
-        cout << "Kembali ke menu utama? (Y/N): ";
-        cin >> repeatMenu;
-    } while (repeatMenu == 'Y' || repeatMenu == 'y');
-
-    cout << "ANDA TELAH KELUAR DARI PROGRAM" << endl;
+    } while (menuChoice != 0);
 
     return 0;
 }
